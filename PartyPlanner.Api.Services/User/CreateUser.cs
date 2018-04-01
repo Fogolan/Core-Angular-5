@@ -2,44 +2,51 @@
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-using PartyPlanner.Api.Services.User.Models;
 using PartyPlanner.Data.Entities;
+using PartyPlanner.Data.Models;
 
 namespace PartyPlanner.Api.Services.User
 {
     public static class CreateUser
     {
-        public class Command: IRequest<Guid>
+        public class Command : IRequest<int>
         {
-            public UserDto UserDto { get; set; }
+            public string Username { get; set; }
+
+            public string Password { get; set; }
         }
 
-        public class Handler : AsyncRequestHandler<Command, Guid>
+        public class Handler : AsyncRequestHandler<Command, int>
         {
             private readonly PartyPlannerContext partyPlannerContext;
-            private readonly IPasswordHasher<UserDto> hasher;
+            private readonly UserManager<UserIdentity> userManager;
 
-            public Handler(PartyPlannerContext partyPlannerContext)
+            public Handler(PartyPlannerContext partyPlannerContext, UserManager<UserIdentity> userManager)
             {
                 this.partyPlannerContext = partyPlannerContext;
-                this.hasher = new PasswordHasher<UserDto>();
+                this.userManager = userManager;
             }
 
-            protected override async Task<Guid> HandleCore(Command request)
+            protected override async Task<int> HandleCore(Command request)
             {
-                var userDto = request.UserDto;
-                var hashedPassword = hasher.HashPassword(userDto, userDto.Password);
-
-                var user = await partyPlannerContext.Users.AddAsync(new Data.Models.User
+                var identity = new UserIdentity
                 {
-                    Id = Guid.NewGuid(),
-                    Username = userDto.Username,
-                    PasswordHash = hashedPassword
-                });
+                    UserName = request.Username
+                };
+
+                await userManager.CreateAsync(identity, request.Password);
+
+
+                var user = new Data.Models.User
+                {
+                    Identity = identity
+                };
+
+                partyPlannerContext.Users.Add(user);
 
                 await partyPlannerContext.SaveChangesAsync();
 
-                return user.Entity.Id;
+                return user.Id;
             }
         }
     }

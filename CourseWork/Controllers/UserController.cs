@@ -2,7 +2,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using PartyPlanner.Api.Services.User;
-using PartyPlanner.Api.Services.User.Models;
 
 namespace PartyPlanner.Web.Api.Controllers
 {
@@ -19,12 +18,9 @@ namespace PartyPlanner.Web.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateUser([FromBody] UserDto userDto)
+        public async Task<IActionResult> CreateUser([FromBody] CreateUser.Command command)
         {
-            return Ok(await mediator.Send(new CreateUser.Command
-            {
-                UserDto = userDto
-            }));
+            return Ok(await mediator.Send(command));
         }
     }
 }
