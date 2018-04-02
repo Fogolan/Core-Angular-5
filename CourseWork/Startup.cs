@@ -14,6 +14,7 @@ using Microsoft.IdentityModel.Tokens;
 using PartyPlanner.Api.Services.User.Models;
 using PartyPlanner.Data.Entities;
 using PartyPlanner.Data.Models;
+using PartyPlanner.Infrastructure.Contants;
 using StructureMap;
 
 namespace PartyPlanner.Web.Api
@@ -52,6 +53,10 @@ namespace PartyPlanner.Web.Api
       {
         options.DefaultPolicy = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme)
           .RequireAuthenticatedUser().Build();
+      });
+      services.AddAuthorization(options =>
+      {
+        options.AddPolicy("ApiUser", policy => policy.RequireClaim(Constants.Strings.JwtClaimIdentifiers.Rol, Constants.Strings.JwtClaims.ApiAccess));
       });
       services.AddIdentity<UserIdentity, IdentityRole>
         (o =>
