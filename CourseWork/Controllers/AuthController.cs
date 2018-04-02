@@ -18,7 +18,7 @@ namespace PartyPlanner.Web.Api.Controllers
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateUser([FromBody] Login.Query query)
+    public async Task<IActionResult> Login([FromBody] Login.Query query)
     {
       return Ok(await mediator.Send(query));
     }

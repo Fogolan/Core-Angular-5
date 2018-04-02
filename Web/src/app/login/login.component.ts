@@ -29,20 +29,16 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() { }
 
-  login() {
+  async login() {
     this.isLoading = true;
-    this.authenticationService.login(this.loginForm.value)
-      .pipe(finalize(() => {
-        this.loginForm.markAsPristine();
-        this.isLoading = false;
-      }))
-      .subscribe(credentials => {
-        log.debug(`${credentials.username} successfully logged in`);
-        this.router.navigate(['/'], { replaceUrl: true });
-      }, error => {
-        log.debug(`Login error: ${error}`);
-        this.error = error;
-      });
+    const result = await this.authenticationService.login(this.loginForm.value);
+    console.log(result);
+    if (result) {
+      this.router.navigate(['/home']);
+    } else {
+      this.error = 'invalid login or password';
+    }
+    this.isLoading = false;
   }
 
   setLanguage(language: string) {
