@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PartyPlanner.Api.Services.User;
@@ -7,7 +8,7 @@ using PartyPlanner.Api.Services.User;
 namespace PartyPlanner.Web.Api.Controllers
 {
     [Produces("application/json")]
-    [Microsoft.AspNetCore.Mvc.Route("api/User")]
+    [Route("api/User")]
     [IgnoreAntiforgeryToken]
     public class UserController : Controller
     {
@@ -20,11 +21,11 @@ namespace PartyPlanner.Web.Api.Controllers
       this.roleManager = roleManager;
     }
 
-        [HttpPost]
-        public async Task<IActionResult> CreateUser([FromBody] CreateUser.Command command)
-        {
-            return Ok(await mediator.Send(command));
-        }
+      [HttpPost]
+      public async Task<IActionResult> CreateUser([FromBody] CreateUser.Command command)
+      {
+          return Ok(await mediator.Send(command));
+      }
 
       [HttpPost("role")]
       public async Task<IActionResult> CreateRole([FromBody] CreateUser.Command command)
@@ -32,6 +33,6 @@ namespace PartyPlanner.Web.Api.Controllers
         IdentityResult result = await roleManager.CreateAsync(new IdentityRole("user"));
 
         return Ok();
-    }
+      }
   }
 }

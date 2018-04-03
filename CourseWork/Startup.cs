@@ -49,6 +49,25 @@ namespace PartyPlanner.Web.Api
       services.AddDbContext<PartyPlannerContext>(options =>
         options.UseSqlServer(connection));
       services.AddCors();
+      services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        .AddJwtBearer(options => {
+          options.RequireHttpsMetadata = false;
+          options.TokenValidationParameters = new TokenValidationParameters
+          {
+            ValidateIssuer = true,
+            ValidIssuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)],
+
+            ValidateAudience = true,
+            ValidAudience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)],
+
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = _signingKey,
+
+            RequireExpirationTime = false,
+            ValidateLifetime = false,
+            ClockSkew = TimeSpan.Zero
+          };
+        });
       services.AddAuthorization(options =>
       {
         options.DefaultPolicy = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme)
@@ -111,22 +130,6 @@ namespace PartyPlanner.Web.Api
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(IApplicationBuilder app, IHostingEnvironment env)
     {
-      var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
-      var tokenValidationParameters = new TokenValidationParameters
-      {
-        ValidateIssuer = true,
-        ValidIssuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)],
-
-        ValidateAudience = true,
-        ValidAudience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)],
-
-        ValidateIssuerSigningKey = true,
-        IssuerSigningKey = _signingKey,
-
-        RequireExpirationTime = false,
-        ValidateLifetime = false,
-        ClockSkew = TimeSpan.Zero
-      };
       if (env.IsDevelopment())
       {
         app.UseDeveloperExceptionPage();
