@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Newtonsoft.Json;
+using PartyPlanner.Api.Services.Auth.Models;
 using PartyPlanner.Api.Services.User.Models;
 using PartyPlanner.Data.Models;
 
@@ -11,14 +12,14 @@ namespace PartyPlanner.Api.Services.Auth
 {
   public static class Login
   {
-    public class Query : IRequest<string>
+    public class Query : IRequest<Credentials>
     {
       public string Username { get; set; }
 
       public string Password { get; set; }
     }
 
-    public class Handler : AsyncRequestHandler<Query, string>
+    public class Handler : AsyncRequestHandler<Query, Credentials>
     {
       private readonly UserManager<UserIdentity> _userManager;
       private readonly IJwtFactory _jwtFactory;
@@ -33,21 +34,17 @@ namespace PartyPlanner.Api.Services.Auth
         _jwtOptions = jwtOptions;
       }
 
-      protected async override Task<string> HandleCore(Query request)
+      protected async override Task<Credentials> HandleCore(Query request)
       {
         var identity = await GetClaimsIdentity(request.Username, request.Password);
-
-        // Serialize and return the response
-        var response = new
+        
+        return new Credentials
         {
-          id = identity.Claims.Single(c => c.Type == "id").Value,
-          auth_token = await _jwtFactory.GenerateEncodedToken(request.Username, identity),
-          expires_in = (int)_jwtOptions.ValidFor.TotalSeconds
+          Id = identity.Claims.Single(c => c.Type == "id").Value,
+          Username = request.Username,
+          Token = await _jwtFactory.GenerateEncodedToken(request.Username, identity),
+          ExpiresIn = (int) _jwtOptions.ValidFor.TotalSeconds
         };
-
-        var json = JsonConvert.SerializeObject(response, _serializerSettings);
-
-        return json;
       }
 
       private async Task<ClaimsIdentity> GetClaimsIdentity(string userName, string password)

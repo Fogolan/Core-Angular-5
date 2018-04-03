@@ -5,8 +5,9 @@ import { HttpClient } from '@angular/common/http';
 
 export interface Credentials {
   // Customize received credentials here
-  username: string;
+  id: string;
   token: string;
+  username: string;
 }
 
 export interface LoginContext {
@@ -91,6 +92,7 @@ export class AuthenticationService {
     if (credentials) {
       const storage = remember ? localStorage : sessionStorage;
       storage.setItem(credentialsKey, JSON.stringify(credentials));
+      console.log(this._credentials, '_credentials');
     } else {
       sessionStorage.removeItem(credentialsKey);
       localStorage.removeItem(credentialsKey);
