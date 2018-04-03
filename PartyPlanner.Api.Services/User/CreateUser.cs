@@ -21,7 +21,7 @@ namespace PartyPlanner.Api.Services.User
             private readonly PartyPlannerContext partyPlannerContext;
             private readonly UserManager<UserIdentity> userManager;
 
-            public Handler(PartyPlannerContext partyPlannerContext, UserManager<UserIdentity> userManager)
+            public Handler(PartyPlannerContext partyPlannerContext, UserManager<UserIdentity> userManager, RoleManager<IdentityRole> roleManager)
             {
                 this.partyPlannerContext = partyPlannerContext;
                 this.userManager = userManager;
@@ -33,14 +33,16 @@ namespace PartyPlanner.Api.Services.User
                 {
                     UserName = request.Username
                 };
-
-                await userManager.CreateAsync(identity, request.Password);
-
+                var result = await userManager.CreateAsync(identity, request.Password);
+                if (result.Succeeded)
+                {
+                  await userManager.AddToRoleAsync(identity, "user");
+                }
 
                 var user = new Data.Models.User
-                {
-                    Identity = identity
-                };
+                  {
+                      Identity = identity
+                  };
 
                 partyPlannerContext.Users.Add(user);
 
