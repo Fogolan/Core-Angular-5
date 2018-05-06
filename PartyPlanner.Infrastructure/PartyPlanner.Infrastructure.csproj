@@ -8,4 +8,8 @@
     <Compile Remove="Contants\Errors.cs" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="FluentValidation.AspNetCore" Version="7.5.2" />
+  </ItemGroup>
+
 </Project>
