@@ -10,6 +10,7 @@ namespace PartyPlanner.Api.Services.Cocktail
         public class Command : IRequest<int>
         {
             public Data.Models.Cocktail Cocktail { get; set; }
+            public int Id { get; set; }
         }
 
         public class Handler : AsyncRequestHandler<Command, int>
@@ -28,9 +29,10 @@ namespace PartyPlanner.Api.Services.Cocktail
                     .First(c => c.Id == command.Cocktail.Id);
                 cocktail.Name = cocktailDto.Name;
                 cocktail.Amount = cocktailDto.Amount;
-                cocktail.Degrees = cocktail.Degrees;
-                cocktail.Image = cocktail.Image;
-                cocktail.UpdatedDate = cocktail.UpdatedDate;
+                cocktail.Degrees = cocktailDto.Degrees;
+                cocktail.Image = cocktailDto.Image;
+                cocktail.UpdatedDate = cocktailDto.UpdatedDate;
+                _context.SaveChanges();
                 return Task.FromResult(cocktail.Id);
             }
         }
