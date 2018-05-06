@@ -14,6 +14,8 @@ import { AboutModule } from './about/about.module';
 import { LoginModule } from './login/login.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { RegistrationModule } from '@app/registration/registration.module';
+import { EmailConfirmModule } from '@app/email-confirm/email-confirm.module';
 
 @NgModule({
   imports: [
@@ -27,6 +29,8 @@ import { AppRoutingModule } from './app-routing.module';
     SharedModule,
     HomeModule,
     AboutModule,
+    RegistrationModule,
+    EmailConfirmModule,
     LoginModule,
     AppRoutingModule
   ],

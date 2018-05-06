@@ -1,0 +1,12 @@
+<p *ngIf="isConfirmationMessageVisible">
+  Please confirm your email.
+</p>
+
+<p *ngIf="isConfirmationSuccess">
+  Confirmation successfull!
+  <input type="button" class="btn btn-primary" value="Login" (click)="goToLogin()" />
+</p>
+
+<p *ngIf="isConfirmationSuccess === false">
+  Confirmation failed!
+</p>
