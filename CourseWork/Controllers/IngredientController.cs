@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using PartyPlanner.Api.Services.Ingredient;
@@ -16,18 +15,15 @@ namespace PartyPlanner.Web.Api.Controllers
         {
             _mediator = mediator;
         }
-        // GET: api/Ingredient
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
 
         // GET: api/Ingredient/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetIngredient([FromRoute] int id)
         {
-            return "value";
+            return Ok(await _mediator.Send(new GetRecipe.Query
+            {
+                CocktailId = id
+            }));
         }
         
         // POST: api/Ingredient
