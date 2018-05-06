@@ -15,6 +15,7 @@ using PartyPlanner.Api.Services.User.Models;
 using PartyPlanner.Data.Entities;
 using PartyPlanner.Data.Models;
 using PartyPlanner.Infrastructure.Contants;
+using PartyPlanner.Infrastructure.Filter;
 using StructureMap;
 
 namespace PartyPlanner.Web.Api
@@ -89,9 +90,11 @@ namespace PartyPlanner.Web.Api
         })
         .AddEntityFrameworkStores<PartyPlannerContext>()
         .AddDefaultTokenProviders();
-      services.AddMvc()
+      services.AddMvc(config => { config.Filters.Add(new ApiExceptionFilterAttribute()); }
+          )
         .AddControllersAsServices();
-      services.AddApplicationInsightsTelemetry(Configuration);
+        services.AddScoped<ApiExceptionFilterAttribute>();
+        services.AddApplicationInsightsTelemetry(Configuration);
       return ConfigureIoC(services);
     }
 

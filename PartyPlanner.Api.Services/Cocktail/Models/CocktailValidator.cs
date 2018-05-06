@@ -20,7 +20,7 @@ namespace PartyPlanner.Api.Services.Cocktail.Models
                 .NotNull();
             RuleFor(x => x.Degrees)
                 .NotNull()
-                .WithMessage("field Amount is required"); ;
+                .WithMessage("field Amount is required"); 
             RuleFor(x => x.Degrees)
                 .ExclusiveBetween(1, 100)
                 .WithMessage("field Degrees must be at least 1 and not more than 100");
