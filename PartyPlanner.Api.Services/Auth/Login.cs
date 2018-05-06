@@ -3,8 +3,8 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-using Newtonsoft.Json;
 using PartyPlanner.Api.Services.Auth.Models;
+using PartyPlanner.Api.Services.Auth.Services;
 using PartyPlanner.Api.Services.User.Models;
 using PartyPlanner.Data.Models;
 
@@ -23,19 +23,16 @@ namespace PartyPlanner.Api.Services.Auth
     {
       private readonly UserManager<UserIdentity> _userManager;
       private readonly IJwtFactory _jwtFactory;
-      private readonly JsonSerializerSettings _serializerSettings;
-      private readonly JwtIssuerOptions _jwtOptions;
+        private readonly JwtIssuerOptions _jwtOptions;
 
-      public Handler(UserManager<UserIdentity> userManager, IJwtFactory jwtFactory,
-        JsonSerializerSettings serializerSettings, JwtIssuerOptions jwtOptions)
+      public Handler(UserManager<UserIdentity> userManager, IJwtFactory jwtFactory, JwtIssuerOptions jwtOptions)
       {
         _userManager = userManager;
         _jwtFactory = jwtFactory;
-        _serializerSettings = serializerSettings;
-        _jwtOptions = jwtOptions;
+          _jwtOptions = jwtOptions;
       }
 
-      protected async override Task<Credentials> HandleCore(Query request)
+      protected override async Task<Credentials> HandleCore(Query request)
       {
         var identity = await GetClaimsIdentity(request.Username, request.Password);
         var user = await _userManager.FindByNameAsync(request.Username);
