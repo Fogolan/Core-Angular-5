@@ -14,7 +14,8 @@ namespace PartyPlanner.Api.Services.Cocktail.Models
                 .NotNull()
                 .WithMessage("field Amount is required");
             RuleFor(x => x.Amount)
-                .ExclusiveBetween(10, 5000)
+                .GreaterThan(10)
+                .LessThan(5000)
                 .WithMessage("field Degrees must be at least 10 and not more than 5000");
             RuleFor(x => x.CreatedDate)
                 .NotNull();
@@ -22,7 +23,8 @@ namespace PartyPlanner.Api.Services.Cocktail.Models
                 .NotNull()
                 .WithMessage("field Amount is required"); 
             RuleFor(x => x.Degrees)
-                .ExclusiveBetween(1, 100)
+                .GreaterThan(1)
+                .LessThan(100)
                 .WithMessage("field Degrees must be at least 1 and not more than 100");
             RuleFor(x => x.Image)
                 .NotNull()
