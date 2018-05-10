@@ -1,0 +1,40 @@
+<form class="form" [formGroup]="form" (submit)="onSubmit()">
+  <div class="container h-100">
+    <div class="row align-items-center h-100">
+      <div class="col-5 mx-auto">
+        <h1 class="text-center" translate>CreateCocktail</h1>
+        <br>
+        <div class="form-group row">
+          <input class="col-10" class="form-control" type="text" [formControl]="form.get('name')" 
+          [(ngModel)]="cocktail.name" placeholder="Name"/>
+          <div class="error" *ngIf="isControlInvalid('name')">
+            <i class="text-danger" translate> ConspectNameInvalid </i>
+          </div>
+        </div>
+        <div class="form-group row">
+          <input class="col-10" class="form-control" type="text" [formControl]="form.get('degrees')"
+           [(ngModel)]="cocktail.degrees" placeholder="Degrees"/>
+          <div class="error" *ngIf="isControlInvalid('degrees')">
+            <i class="text-danger" translate>ConspectNumberInvalid</i>
+          </div>
+        </div>
+        <div class="form-group row">
+          <input class="col-10" class="form-control" type="text" [formControl]="form.get('amount')" 
+          [(ngModel)]="cocktail.amount" placeholder="Amount"/>
+          <div class="error" *ngIf="isControlInvalid('amount')">
+            <i class="text-danger" translate> ConspectNameInvalid </i>
+          </div>
+        </div>
+        <div class="form-group row">
+          <input class="col-10" class="form-control" type="text" [formControl]="form.get('image')" 
+          [(ngModel)]="cocktail.image" placeholder="Image"/>
+          <div class="error" *ngIf="isControlInvalid('image')">
+            <i class="text-danger" translate> ConspectNameInvalid </i>
+          </div>
+        </div>
+        <br/>
+        <button type="submit" class="btn btn-primary" translate>Create conspect</button>
+      </div>
+    </div>
+  </div>
+</form>
