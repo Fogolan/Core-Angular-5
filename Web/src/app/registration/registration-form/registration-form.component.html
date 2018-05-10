@@ -1,0 +1,62 @@
+<div class="login-container bg-light">
+  <div class="login-box">
+    <div>
+      <div class="d-inline-block ml-3" ngbDropdown>
+        <button id="language-dropdown" class="btn btn-sm btn-secondary" ngbDropdownToggle>
+          {{currentLanguage}}
+        </button>
+        <div ngbDropdownMenu aria-labelledby="language-dropdown">
+          <button class="dropdown-item" *ngFor="let language of languages" (click)="setLanguage(language)">
+            {{language}}
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="card col-md-6 mt-3 mx-auto">
+        <div class="card-body">
+          <h4 class="card-title text-center">
+            <i class="far fa-3x fa-user-circle text-muted"></i>
+          </h4>
+          <form [formGroup]="form" novalidate>
+              <div class="alert alert-danger" [hidden]="!error" translate>
+                  {{error}}
+                </div>
+            <div class="form-group">
+              <label class="d-block">
+                <input type="text" [formControl]="form.get('UserName')" [(ngModel)]="registration.userName" class="form-control" [placeholder]="'Username' | translate" />
+                <div class="text-danger" *ngIf="isControlInvalid('UserName')" translate>
+                  Username is required
+                </div>
+                <!-- <span hidden translate>Username</span> -->
+              </label>
+              <label class="d-block">
+                <input type="text" [formControl]="form.get('Email')" class="form-control" placeholder="Email" [(ngModel)]="registration.email" />
+                <div class="text-danger" *ngIf="isControlInvalid('Email')" translate>
+                  EmailInvalide
+                </div>
+              </label>
+              <label class="d-block">
+                <input type="password" [formControl]="form.get('Password')" class="form-control" [(ngModel)]="registration.password" [placeholder]="'Password' | translate" required/>
+                <div class="text-danger" *ngIf="isControlInvalid('Password')" translate>
+                  Password is required
+                </div>
+              </label>
+
+              <label class="d-block">
+                <input type="password" [formControl]="form.get('RepeatPassword')" [(ngModel)]="registration.confirmPassword" class="form-control" [placeholder]="'RepeatPassword' | translate"
+                  required/>
+                  <div class="text-danger" *ngIf="isControlInvalid('RepeatPassword')" translate>
+                    RepeatPasswordInValide
+                  </div>
+              </label>
+            </div>
+          </form>
+          <button class="btn btn-primary w-100" [disabled]="form.invalid" (click)="submit()">            
+            <span translate>Registration</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

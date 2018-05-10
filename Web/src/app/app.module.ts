@@ -15,6 +15,8 @@ import { LoginModule } from './login/login.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { PersonalPageModule } from '@app/personanl-page/personal-page.module';
+import { RegistrationModule } from '@app/registration/registration.module';
+import { EmailConfirmModule } from '@app/email-confirm/email-confirm.module';
 
 @NgModule({
   imports: [
@@ -28,6 +30,8 @@ import { PersonalPageModule } from '@app/personanl-page/personal-page.module';
     SharedModule,
     HomeModule,
     AboutModule,
+    RegistrationModule,
+    EmailConfirmModule,
     LoginModule,
     PersonalPageModule,
     AppRoutingModule,

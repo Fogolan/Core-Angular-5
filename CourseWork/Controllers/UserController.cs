@@ -3,6 +3,8 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Routing;
+using PartyPlanner.Api.Services.Auth;
 using PartyPlanner.Api.Services.User;
 
 namespace PartyPlanner.Web.Api.Controllers
@@ -24,6 +26,7 @@ namespace PartyPlanner.Web.Api.Controllers
       [HttpPost]
       public async Task<IActionResult> CreateUser([FromBody] CreateUser.Command command)
       {
+          command.UrlHelper = new UrlHelper(Url.ActionContext);
           return Ok(await mediator.Send(command));
       }
 
@@ -34,5 +37,13 @@ namespace PartyPlanner.Web.Api.Controllers
 
         return Ok();
       }
-  }
+
+        [HttpGet("confirm")]
+        public async Task ConfirmEmail(ConfirmEmail.Query query)
+        {
+            var result = await mediator.Send(query);
+            string url = $"http://localhost:4200/confirm?confirmSuccess={result}";
+            Response.Redirect(url);
+        }
+    }
 }
