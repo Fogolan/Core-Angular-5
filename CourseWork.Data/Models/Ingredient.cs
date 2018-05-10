@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PartyPlanner.Data.Models
 {
@@ -15,6 +17,19 @@ namespace PartyPlanner.Data.Models
 
         [Required]
         public string Name { get; set; }
+
+        public int Degrees { get; set; }
+
+        public string ImageSrc { get; set; }
+
+        [ForeignKey("UserIdentity")]
+        public string UserIdentityId { get; set; }
+
+        public UserIdentity User { get; set; }
+
+        public DateTime CreatedDate { get; set; }
+
+        public DateTime UpdatedDate { get; set; }
 
         [Required]
         public bool Active { get; set; }

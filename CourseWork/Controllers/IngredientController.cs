@@ -1,11 +1,13 @@
 ﻿using System.Threading.Tasks;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PartyPlanner.Api.Services.Ingredient;
-using PartyPlanner.Data.Models;
+using PartyPlanner.Api.Services.Ingredient.Models;
 
 namespace PartyPlanner.Web.Api.Controllers
 {
+    [Authorize]
     [Route("api/Ingredient")]
     public class IngredientController : Controller
     {
@@ -28,11 +30,12 @@ namespace PartyPlanner.Web.Api.Controllers
         
         // POST: api/Ingredient
         [HttpPost]
-        public async Task<IActionResult> CreateIngredient([FromBody] Ingredient ingredient)
+        public async Task<IActionResult> CreateIngredient([FromBody] IngredientDto ingredient)
         {
             return Ok(await _mediator.Send(new CreateIngredient.Command
             {
-                Ingredient = ingredient
+                Ingredient = ingredient,
+                UserClaims = User
             }));
         }
    

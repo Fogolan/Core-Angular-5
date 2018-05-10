@@ -11,9 +11,10 @@ using System;
 namespace PartyPlanner.Data.Migrations
 {
     [DbContext(typeof(PartyPlannerContext))]
-    partial class PartyPlannerContextModelSnapshot : ModelSnapshot
+    [Migration("20180510141513_updated-ingredient-model")]
+    partial class updatedingredientmodel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

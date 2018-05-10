@@ -11,9 +11,10 @@ using System;
 namespace PartyPlanner.Data.Migrations
 {
     [DbContext(typeof(PartyPlannerContext))]
-    partial class PartyPlannerContextModelSnapshot : ModelSnapshot
+    [Migration("20180510134147_add-degrees-to-ingredient")]
+    partial class adddegreestoingredient
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -165,22 +166,12 @@ namespace PartyPlanner.Data.Migrations
 
                     b.Property<bool>("Active");
 
-                    b.Property<DateTime>("CreatedDate");
-
                     b.Property<int>("Degrees");
-
-                    b.Property<string>("ImageSrc");
 
                     b.Property<string>("Name")
                         .IsRequired();
 
-                    b.Property<DateTime>("UpdatedDate");
-
-                    b.Property<string>("UserIdentityId");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserIdentityId");
 
                     b.ToTable("Ingredients");
                 });
@@ -317,13 +308,6 @@ namespace PartyPlanner.Data.Migrations
                     b.HasOne("PartyPlanner.Data.Models.UserIdentity", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("PartyPlanner.Data.Models.Ingredient", b =>
-                {
-                    b.HasOne("PartyPlanner.Data.Models.UserIdentity", "User")
-                        .WithMany()
-                        .HasForeignKey("UserIdentityId");
                 });
 
             modelBuilder.Entity("PartyPlanner.Data.Models.Recipe", b =>

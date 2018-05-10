@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgModel} from '@angular/forms';
 import { Cocktail } from '@app/personanl-page/cocktail-form/models/cocktail';
 import { HttpClient } from '@angular/common/http';
-import { CocktailService } from '@app/personanl-page/cocktail.service';
+import { CocktailService } from './cocktail.service';
 
 @Component({
   selector: 'app-cocktail-form',
