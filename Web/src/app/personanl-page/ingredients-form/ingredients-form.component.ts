@@ -3,6 +3,7 @@ import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms'
 import { Ingredient } from './models/ingredient';
 import { values } from 'lodash';
 import { IngredientService } from '@app/personanl-page/ingredients-form/ingredient.service';
+import { UploadPhotoComponent } from '@app/shared';
 
 @Component({
   selector: 'app-ingredients-form',

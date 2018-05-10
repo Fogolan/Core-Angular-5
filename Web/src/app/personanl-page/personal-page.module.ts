@@ -5,12 +5,14 @@ import { PersonalPageRoutingModule } from '@app/personanl-page/personal-page-rou
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CocktailService } from './cocktail-form/cocktail.service';
 import { IngredientsFormComponent } from '@app/personanl-page/ingredients-form/ingredients-form.component';
+import { SharedModule } from '@app/shared';
 
 @NgModule({
   imports: [
     CommonModule,
     PersonalPageRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModule
   ],
   providers: [CocktailService],
   declarations: [CocktailFormComponent, IngredientsFormComponent]

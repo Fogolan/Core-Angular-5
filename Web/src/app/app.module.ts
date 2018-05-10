@@ -17,6 +17,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { PersonalPageModule } from '@app/personanl-page/personal-page.module';
 import { RegistrationModule } from '@app/registration/registration.module';
 import { EmailConfirmModule } from '@app/email-confirm/email-confirm.module';
+import { CloudinaryModule, CloudinaryConfiguration, provideCloudinary } from '@cloudinary/angular-5.x';
+import { Cloudinary } from 'cloudinary-core';
+import { FileUploadModule } from 'ng2-file-upload';
+
+export const cloudinaryLib = {
+  Cloudinary: Cloudinary
+};
 
 @NgModule({
   imports: [
@@ -26,6 +33,10 @@ import { EmailConfirmModule } from '@app/email-confirm/email-confirm.module';
     HttpClientModule,
     TranslateModule.forRoot(),
     NgbModule.forRoot(),
+    CloudinaryModule.forRoot(cloudinaryLib, {
+      cloud_name: 'fogolan',
+      upload_preset: 'c9xnh1zp'
+    }),
     CoreModule,
     SharedModule,
     HomeModule,
