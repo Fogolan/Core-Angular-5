@@ -22,9 +22,9 @@ namespace PartyPlanner.Web.Api.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetIngredient([FromRoute] int id)
         {
-            return Ok(await _mediator.Send(new GetRecipe.Query
+            return Ok(await _mediator.Send(new GetIngredient.Query
             {
-                CocktailId = id
+                Id = id
             }));
         }
         

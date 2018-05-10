@@ -12,4 +12,10 @@ export class IngredientService {
         await this.httpClient.post<number>('/Ingredient', ingredient).toPromise();
     }
   }
+
+  async getById(id: number): Promise<Ingredient> {
+    return await this.httpClient
+      .get<Ingredient>(`/ingredient/${id}`)
+      .toPromise();
+  }
 }

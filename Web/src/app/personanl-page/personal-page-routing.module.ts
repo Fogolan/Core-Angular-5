@@ -11,6 +11,12 @@ const routes: Routes = [
       path: 'ingredients',
       component: IngredientsFormComponent,
       data: { title: extract('Ingredients') },
+      children: [
+        {
+          path: ':id',
+          component: IngredientsFormComponent
+        }
+      ]
     },
     {
       path: 'personalpage',

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, NgZone } from '@angular/core';
+import { Component, OnInit, Input, NgZone, Output, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FileUploader, FileUploaderOptions, ParsedResponseHeaders, FileSelectDirective } from 'ng2-file-upload';
 import { Cloudinary } from '@cloudinary/angular-5.x';
@@ -12,7 +12,8 @@ export class UploadPhotoComponent implements OnInit {
 
   constructor(private cloudinary: Cloudinary) { }
 
-  @Input() fileUrl = 'http://res.cloudinary.com/fogolan/image/upload/v1525975481/nophoto_c3wkvb.jpg';
+  @Input() fileUrl: string;
+  @Output() urlChange: EventEmitter<string> = new EventEmitter<string>();
 
   hasBaseDropZoneOver = false;
   uploader: FileUploader;
@@ -51,6 +52,7 @@ export class UploadPhotoComponent implements OnInit {
 
     this.uploader.onCompleteItem = (item: any, response: string, status: number, headers: ParsedResponseHeaders) => {
         this.fileUrl = JSON.parse(response).url;
+        this.urlChange.emit(this.fileUrl);
     };
   }
 
