@@ -46,12 +46,10 @@ namespace PartyPlanner.Web.Api.Controllers
 
         // POST: api/Cocktail
         [HttpPost]
-        public async Task<IActionResult> CreateCocktail([FromBody] Cocktail cocktail)
+        public async Task<IActionResult> CreateCocktail([FromBody] CreateCocktail.Command command)
         {
-            return Ok(await _mediator.Send(new CreateCocktail.Command
-            {
-                Cocktail = cocktail
-            }));
+            command.UserClaims = User;
+            return Ok(await _mediator.Send(command));
         }
 
         // DELETE: api/Cocktail/5

@@ -11,7 +11,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using PartyPlanner.Api.Services.Cocktail.Services;
 using PartyPlanner.Api.Services.User.Models;
+using PartyPlanner.Api.Services.User.Services;
 using PartyPlanner.Data.Entities;
 using PartyPlanner.Data.Models;
 using PartyPlanner.Infrastructure.Contants;
@@ -122,9 +124,11 @@ namespace PartyPlanner.Web.Api
         config.For<SingleInstanceFactory>().Use<SingleInstanceFactory>(ctx => t => ctx.GetInstance(t));
         config.For<MultiInstanceFactory>().Use<MultiInstanceFactory>(ctx => t => ctx.GetAllInstances(t));
         config.For<IMediator>().Use<Mediator>();
+        config.For<IUserService>().Use<UserSerivce>();
+        config.For<ICocktailService>().Use<CocktailService>();
 
-        //Populate the container using the service collection
-        config.Populate(services);
+          //Populate the container using the service collection
+          config.Populate(services);
       });
 
       return container.GetInstance<IServiceProvider>();

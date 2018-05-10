@@ -14,6 +14,7 @@ import { AboutModule } from './about/about.module';
 import { LoginModule } from './login/login.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { PersonalPageModule } from '@app/personanl-page/personal-page.module';
 import { RegistrationModule } from '@app/registration/registration.module';
 import { EmailConfirmModule } from '@app/email-confirm/email-confirm.module';
 
@@ -32,7 +33,8 @@ import { EmailConfirmModule } from '@app/email-confirm/email-confirm.module';
     RegistrationModule,
     EmailConfirmModule,
     LoginModule,
-    AppRoutingModule
+    PersonalPageModule,
+    AppRoutingModule,
   ],
   declarations: [AppComponent],
   providers: [
