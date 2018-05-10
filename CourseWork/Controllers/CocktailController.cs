@@ -1,11 +1,13 @@
 ﻿using System.Threading.Tasks;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PartyPlanner.Api.Services.Cocktail;
 using PartyPlanner.Data.Models;
 
 namespace PartyPlanner.Web.Api.Controllers
 {
+    [Authorize]
     [Route("api/Cocktail")]
     public class CocktailController : Controller
     {

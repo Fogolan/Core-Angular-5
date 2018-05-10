@@ -2,13 +2,11 @@
 
 namespace PartyPlanner.Api.Services.Cocktail.Models
 {
-    public class CocktailValidator : AbstractValidator<Data.Models.Cocktail>
+    public class CocktailValidator : AbstractValidator<CocktailDto>
     {
         public CocktailValidator()
         {
             RuleFor(x => x.Id)
-                .NotNull();
-            RuleFor(x => x.Active)
                 .NotNull();
             RuleFor(x => x.Amount)
                 .NotNull()
