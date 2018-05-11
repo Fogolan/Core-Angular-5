@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { LoaderComponent } from './loader/loader.component';
 import { UploadPhotoComponent } from '@app/shared';
 import { FileUploadModule } from 'ng2-file-upload';
+import { IngredientsListComponent } from '@app/shared/ingredients-list/ingredients-list.component';
 
 @NgModule({
   imports: [
@@ -12,11 +13,13 @@ import { FileUploadModule } from 'ng2-file-upload';
   ],
   declarations: [
     LoaderComponent,
-    UploadPhotoComponent
+    UploadPhotoComponent,
+    IngredientsListComponent
   ],
   exports: [
     LoaderComponent,
-    UploadPhotoComponent
+    UploadPhotoComponent,
+    IngredientsListComponent
   ]
 })
 export class SharedModule { }

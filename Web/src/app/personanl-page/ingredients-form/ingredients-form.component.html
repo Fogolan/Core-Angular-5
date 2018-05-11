@@ -2,8 +2,8 @@
   <div class="container h-100">
     <div class="row align-items-center h-100">
       <div class="col-5 mx-auto">
-        <h1 class="text-center" *ngIf="!ingredient.id">Create Ingredient</h1>
-        <h1 class="text-center" *ngIf="ingredient.id">Update Ingredient</h1>
+        <h1 class="text-center" *ngIf="isNewIngredient()">Create Ingredient</h1>
+        <h1 class="text-center" *ngIf="!isNewIngredient()">Update Ingredient</h1>
         <br>
         <div class="form-group row">
           <app-upload-photo [(fileUrl)]="ingredient.imageSrc" (urlChange)="urlChange($event)"></app-upload-photo>
@@ -26,6 +26,7 @@
         </div>
         <br/>
         <button type="submit" class="btn btn-primary" translate>Save ingredient</button>
+        <button *ngIf="!isNewIngredient()" type="button" (click)="delete()" class="btn btn-primary" translate>Delete ingredient</button>
       </div>
     </div>
   </div>

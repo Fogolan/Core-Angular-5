@@ -43,6 +43,10 @@ export class IngredientsFormComponent implements OnInit {
     this.ingredient.imageSrc = url;
   }
 
+  isNewIngredient(): boolean {
+    return this.ingredient && !this.ingredient.id;
+  }
+
   async onSubmit() {
     const controls = this.form.controls;
     if (this.form.invalid) {
@@ -52,6 +56,10 @@ export class IngredientsFormComponent implements OnInit {
     } else {
         await this.service.updateIngredient(this.ingredient);
       }
+  }
+
+  async delete() {
+    await this.service.deleteById(this.ingredient.id);
   }
 
   private loadIngredient(id: number) {

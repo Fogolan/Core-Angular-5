@@ -17,26 +17,26 @@ namespace PartyPlanner.Web.Api.Controllers
         private readonly IMediator mediator;
         private readonly RoleManager<IdentityRole> roleManager;
 
-    public UserController(IMediator mediator, RoleManager<IdentityRole> roleManager)
-    {
-      this.mediator = mediator;
-      this.roleManager = roleManager;
-    }
+        public UserController(IMediator mediator, RoleManager<IdentityRole> roleManager)
+        {
+            this.mediator = mediator;
+            this.roleManager = roleManager;
+        }
 
-      [HttpPost]
-      public async Task<IActionResult> CreateUser([FromBody] CreateUser.Command command)
-      {
-          command.UrlHelper = new UrlHelper(Url.ActionContext);
-          return Ok(await mediator.Send(command));
-      }
+        [HttpPost]
+        public async Task<IActionResult> CreateUser([FromBody] CreateUser.Command command)
+        {
+            command.UrlHelper = new UrlHelper(Url.ActionContext);
+            return Ok(await mediator.Send(command));
+        }
 
-      [HttpPost("role")]
-      public async Task<IActionResult> CreateRole([FromBody] CreateUser.Command command)
-      {
-        IdentityResult result = await roleManager.CreateAsync(new IdentityRole("user"));
+        [HttpPost("role")]
+        public async Task<IActionResult> CreateRole([FromBody] CreateUser.Command command)
+        {
+            IdentityResult result = await roleManager.CreateAsync(new IdentityRole("user"));
 
-        return Ok();
-      }
+            return Ok();
+        }
 
         [HttpGet("confirm")]
         public async Task ConfirmEmail(ConfirmEmail.Query query)
@@ -45,5 +45,16 @@ namespace PartyPlanner.Web.Api.Controllers
             string url = $"http://localhost:4200/confirm?confirmSuccess={result}";
             Response.Redirect(url);
         }
+
+        [Authorize]
+        [HttpGet("ingredients")]
+        public async Task<IActionResult> GetCurrentUserIngredients()
+        {
+            return Ok(await mediator.Send(new GetUserIngredients.Query
+            {
+                UserClaims = User
+            }));
+        }
+
     }
 }

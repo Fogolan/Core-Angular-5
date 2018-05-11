@@ -18,6 +18,12 @@ namespace PartyPlanner.Web.Api.Controllers
             _mediator = mediator;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetIngredients()
+        {
+            return Ok(await _mediator.Send(new GetIngredients.Query()));
+        }
+
         // GET: api/Ingredient/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetIngredient([FromRoute] int id)
@@ -38,7 +44,17 @@ namespace PartyPlanner.Web.Api.Controllers
                 UserClaims = User
             }));
         }
-   
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateIngredient([FromBody] IngredientDto ingredient)
+        {
+            return Ok(await _mediator.Send(new UpdateIngredient.Command
+            {
+                Ingredient = ingredient,
+                UserClaims = User
+            }));
+        }
+
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteIngredient([FromRoute] int id)

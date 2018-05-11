@@ -13,6 +13,7 @@ export class UploadPhotoComponent implements OnInit {
   constructor(private cloudinary: Cloudinary) { }
 
   @Input() fileUrl: string;
+  @Input() readonly = false;
   @Output() urlChange: EventEmitter<string> = new EventEmitter<string>();
 
   hasBaseDropZoneOver = false;

@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CocktailService } from './cocktail-form/cocktail.service';
 import { IngredientsFormComponent } from '@app/personanl-page/ingredients-form/ingredients-form.component';
 import { SharedModule } from '@app/shared';
+import { IngretientsComponent } from '@app/personanl-page/ingretients/ingretients.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,10 @@ import { SharedModule } from '@app/shared';
     SharedModule
   ],
   providers: [CocktailService],
-  declarations: [CocktailFormComponent, IngredientsFormComponent]
+  declarations: [
+    CocktailFormComponent,
+    IngredientsFormComponent,
+    IngretientsComponent
+  ]
 })
 export class PersonalPageModule { }
