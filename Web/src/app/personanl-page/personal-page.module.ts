@@ -9,6 +9,8 @@ import { SharedModule } from '@app/shared';
 import { IngretientsComponent } from '@app/personanl-page/ingretients/ingretients.component';
 import { CocktailsComponent } from '@app/personanl-page/cocktails/cocktails.component';
 import { CocktailsListComponent } from '@app/personanl-page/cocktails-list/cocktails-list.component';
+import { MyCocktailsComponent } from '@app/personanl-page/my-cocktails/my-cocktails.component';
+import { MyIngredientsComponent } from '@app/personanl-page/my-ingredients/my-ingredients.component';
 
 @NgModule({
   imports: [
@@ -24,6 +26,8 @@ import { CocktailsListComponent } from '@app/personanl-page/cocktails-list/cockt
     IngretientsComponent,
     CocktailsComponent,
     CocktailsListComponent,
+    MyCocktailsComponent,
+    MyIngredientsComponent
   ]
 })
 export class PersonalPageModule { }

@@ -6,7 +6,9 @@
         <app-upload-photo [fileUrl]="cocktail.imageSrc" readonly="true"></app-upload-photo>
       </div>
       <div class="form-group row">
-        {{cocktail.name}}
+        <a class="nav-item nav-link text-uppercase" (click)="openCocktail(cocktail.id)">
+            <span translate>{{cocktail.name}}</span>
+        </a>
       </div>
       <div class="form-group row">	
         Strength: {{cocktail.degrees}} degrees

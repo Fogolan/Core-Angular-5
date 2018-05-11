@@ -9,6 +9,7 @@ import { CocktailItem } from '@app/personanl-page/cocktails/models/cocktailItem'
   styleUrls: ['./cocktails.component.scss']
 })
 export class CocktailsComponent implements OnInit {
+  @Input() readonly: boolean;
   @Input() url: string;
 
   cocktails: CocktailItem[] = [];
@@ -18,6 +19,17 @@ export class CocktailsComponent implements OnInit {
   async ngOnInit() {
     if (this.url) {
       this.cocktails = await this.getIngredients(this.url);
+    }
+  }
+
+  openCocktail(id: number) {
+    console.log(this.readonly);
+    if (id) {
+      if (!this.readonly === false) {
+        this.router.navigate([`/cocktail/${id}`], { replaceUrl: true });
+      } else {
+        this.router.navigate([`/cocktailview/${id}`], { replaceUrl: true });
+      }
     }
   }
 

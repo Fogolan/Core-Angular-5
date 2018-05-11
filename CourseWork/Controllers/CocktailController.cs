@@ -26,6 +26,15 @@ namespace PartyPlanner.Web.Api.Controllers
             return Ok(await _mediator.Send(new GetCocktails.Query()));
         }
 
+        [HttpGet("user")]
+        public async Task<IActionResult> GetUserCocktails()
+        {
+            return Ok(await _mediator.Send(new GetUserCocktails.Query
+            {
+                UserClaims = User
+            }));
+        }
+
         // GET: api/Cocktail/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetCocktail([FromRoute] int id)

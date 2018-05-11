@@ -7,6 +7,8 @@ import { IngredientsFormComponent } from '@app/personanl-page/ingredients-form/i
 import { IngretientsComponent } from '@app/personanl-page/ingretients/ingretients.component';
 import { CocktailsComponent } from '@app/personanl-page/cocktails/cocktails.component';
 import { CocktailsListComponent } from '@app/personanl-page/cocktails-list/cocktails-list.component';
+import { MyCocktailsComponent } from '@app/personanl-page/my-cocktails/my-cocktails.component';
+import { MyIngredientsComponent } from '@app/personanl-page/my-ingredients/my-ingredients.component';
 
 const routes: Routes = [
   Route.withShell([
@@ -56,6 +58,16 @@ const routes: Routes = [
       path: 'cocktails',
       component: CocktailsListComponent,
       data: { title: extract('Cocktails') }
+    },
+    {
+      path: 'mycocktails',
+      component: MyCocktailsComponent,
+      data: { title: extract('Cocktails') }
+    },
+    {
+      path: 'myingredients',
+      component: MyIngredientsComponent,
+      data: { title: extract('Ingredients') }
     }
   ])
 ];
