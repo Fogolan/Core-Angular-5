@@ -5,6 +5,10 @@ import { NgModel} from '@angular/forms';
 import { Cocktail } from '@app/personanl-page/cocktail-form/models/cocktail';
 import { HttpClient } from '@angular/common/http';
 import { CocktailService } from './cocktail.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs/Subscription';
+import { cloneDeep } from 'lodash';
+import { IngredientDto } from '@app/shared/ingredients-list/models/ingredientDto';
 
 @Component({
   selector: 'app-cocktail-form',
@@ -15,12 +19,22 @@ export class CocktailFormComponent implements OnInit {
 
   form: FormGroup;
   cocktail: Cocktail;
+  initialState = new Cocktail();
+  private subscriptions: Subscription[] = [];
+
   constructor(
     private cocktailService: CocktailService,
     private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit() {
+    if (this.route.firstChild) {
+      this.subscriptions.push(this.route.firstChild.params.subscribe(params => this.loadCocktail(+params['id'])));
+    } else {
+      this.loadCocktail(0);
+    }
     this.cocktail = new Cocktail();
     this.initForm();
   }
@@ -38,9 +52,48 @@ export class CocktailFormComponent implements OnInit {
         .forEach(controlName => controls[controlName].markAsTouched());
       return;
     } else {
-        await this.cocktailService.createCocktail(this.cocktail);
+        await this.cocktailService.updateCocktail(this.cocktail);
         console.log(this.form.value);
       }
+  }
+
+  ingredientsChange(ingredients: IngredientDto[]) {
+    this.cocktail.ingredients = ingredients;
+  }
+
+  urlChange(url: string) {
+    this.cocktail.imageSrc = url;
+  }
+
+  isNewIngredient(): boolean {
+    return this.cocktail && !this.cocktail.id;
+  }
+
+  async delete() {
+    await this.cocktailService.deleteById(this.cocktail.id);
+  }
+
+  private loadCocktail(id: number) {
+    this.cocktail = null;
+    this.initForm();
+    if (id) {
+      this.cocktailService.getById(id).then((data: Cocktail) => this.initCocktail(data));
+    } else {
+      this.initCocktail(new Cocktail());
+    }
+  }
+
+  private initCocktail(cocktail: Cocktail) {
+    this.initialState = cocktail;
+    this.resetForm();
+  }
+
+  private resetForm() {
+    this.cocktail = cloneDeep(this.initialState);
+    if (this.form != null) {
+      this.form.markAsPristine();
+      this.form.markAsUntouched();
+    }
   }
 
   private initForm() {
@@ -55,9 +108,6 @@ export class CocktailFormComponent implements OnInit {
       amount: ['', [
         Validators.required,
         Validators.max(50000)
-      ]],
-      image: ['', [
-        Validators.required
       ]]
     });
   }

@@ -11,7 +11,7 @@ const routes: Routes = [
     {
       path: 'ingredient',
       component: IngredientsFormComponent,
-      data: { title: extract('Ingredients') },
+      data: { title: extract('Ingredient') },
       children: [
         {
           path: ':id',
@@ -20,14 +20,20 @@ const routes: Routes = [
       ]
     },
     {
-      path: 'personalpage',
+      path: 'cocktail',
       component: CocktailFormComponent,
-      data: { title: extract('Personalpage') }
+      data: { title: extract('Cocktail') },
+      children: [
+        {
+          path: ':id',
+          component: CocktailFormComponent
+        }
+      ]
     },
     {
       path: 'ingredients',
       component: IngretientsComponent,
-      data: { title: extract('Personalpage') }
+      data: { title: extract('Ingredients') }
     }
   ])
 ];

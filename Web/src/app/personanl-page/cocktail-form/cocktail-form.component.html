@@ -5,6 +5,9 @@
         <h1 class="text-center" translate>CreateCocktail</h1>
         <br>
         <div class="form-group row">
+          <app-upload-photo [(fileUrl)]="cocktail.imageSrc" (urlChange)="urlChange($event)"></app-upload-photo>
+        </div>
+        <div class="form-group row">
           <input class="col-10" class="form-control" type="text" [formControl]="form.get('name')" 
           [(ngModel)]="cocktail.name" placeholder="Name"/>
           <div class="error" *ngIf="isControlInvalid('name')">
@@ -25,15 +28,11 @@
             <i class="text-danger" translate> ConspectNameInvalid </i>
           </div>
         </div>
-        <div class="form-group row">
-          <input class="col-10" class="form-control" type="text" [formControl]="form.get('image')" 
-          [(ngModel)]="cocktail.image" placeholder="Image"/>
-          <div class="error" *ngIf="isControlInvalid('image')">
-            <i class="text-danger" translate> ConspectNameInvalid </i>
-          </div>
-        </div>
         <br/>
-        <button type="submit" class="btn btn-primary" translate>Create conspect</button>
+        <button type="submit" class="btn btn-primary" translate>Save cocktail</button>
+        <button *ngIf="!isNewIngredient()" type="button" (click)="delete()" class="btn btn-primary" translate>Delete ingredient</button>
+        <br/>
+        <app-ingredients-list url="/ingredient" readonly="false" (selectedItemsChanges)="ingredientsChange($event)" [selectedItems]="cocktail.ingredients"></app-ingredients-list>
       </div>
     </div>
   </div>

@@ -12,10 +12,10 @@ import { Router } from '@angular/router';
 export class IngredientsListComponent implements OnInit {
   @Input() url: string;
   @Input() readonly = true;
-  @Output() selectedItemsChanges: EventEmitter<number[]> = new EventEmitter();
+  @Input() selectedItems: IngredientDto[] = [];
+  @Output() selectedItemsChanges: EventEmitter<IngredientDto[]> = new EventEmitter();
 
   ingredientsList: IngredientDto[];
-  selectedItems: number[] = [];
 
   constructor(private httpClient: HttpClient, private router: Router) {}
 
@@ -29,11 +29,11 @@ export class IngredientsListComponent implements OnInit {
     return await this.httpClient.get<IngredientDto[]>(url).toPromise();
   }
 
-  toggleSelection(id: number) {
-    if (some(this.selectedItems, item => item === id)) {
-      remove(this.selectedItems, item => item === id);
+  toggleSelection(selectedItem: IngredientDto) {
+    if (some(this.selectedItems, item => item.id === selectedItem.id)) {
+      remove(this.selectedItems, item => item.id === selectedItem.id);
     } else {
-      this.selectedItems.push(id);
+      this.selectedItems.push(selectedItem);
     }
     this.selectedItemsChanges.emit(this.selectedItems);
   }
@@ -42,5 +42,9 @@ export class IngredientsListComponent implements OnInit {
     if (id) {
       this.router.navigate([`/ingredient/${id}`], { replaceUrl: true });
     }
+  }
+
+  isChecked(itemId: number): boolean {
+    return some(this.selectedItems, item => item.id === itemId);
   }
 }

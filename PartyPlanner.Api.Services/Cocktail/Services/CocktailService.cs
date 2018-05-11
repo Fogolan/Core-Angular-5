@@ -23,7 +23,7 @@ namespace PartyPlanner.Api.Services.Cocktail.Services
                 Amount = cocktailDto.Amount,
                 CreatedDate = DateTime.Now,
                 Degrees = cocktailDto.Degrees,
-                Image = cocktailDto.Image,
+                Image = cocktailDto.ImageSrc,
                 User = user
             };
         }
@@ -33,7 +33,7 @@ namespace PartyPlanner.Api.Services.Cocktail.Services
             cocktail.Name = cocktailDto.Name;
             cocktail.Amount = cocktailDto.Amount;
             cocktail.Degrees = cocktailDto.Degrees;
-            cocktail.Image = cocktailDto.Image;
+            cocktail.Image = cocktailDto.ImageSrc;
             cocktail.CreatedDate = cocktailDto.CreatedDate;
             cocktail.Active = true;
             cocktail.User = user;

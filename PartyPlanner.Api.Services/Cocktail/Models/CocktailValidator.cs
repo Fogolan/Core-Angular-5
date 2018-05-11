@@ -24,7 +24,7 @@ namespace PartyPlanner.Api.Services.Cocktail.Models
                 .GreaterThan(1)
                 .LessThan(100)
                 .WithMessage("field Degrees must be at least 1 and not more than 100");
-            RuleFor(x => x.Image)
+            RuleFor(x => x.ImageSrc)
                 .NotNull()
                 .WithMessage("field Amount is required");
             RuleFor(x => x.Name)

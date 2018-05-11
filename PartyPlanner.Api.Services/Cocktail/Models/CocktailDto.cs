@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using PartyPlanner.Api.Services.Ingredient.Models;
 
 namespace PartyPlanner.Api.Services.Cocktail.Models
 {
@@ -14,12 +14,14 @@ namespace PartyPlanner.Api.Services.Cocktail.Models
 
         public int Amount { get; set; }
 
-        public string Image { get; set; }
+        public string ImageSrc { get; set; }
 
         public DateTime CreatedDate { get; set; }
 
         public DateTime UpdatedDate { get; set; }
 
         public string UserId { get; set; }
+
+        public IEnumerable<IngredientDto> Ingredients { get; set; }
     }
 }

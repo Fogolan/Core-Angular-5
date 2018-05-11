@@ -33,7 +33,7 @@
             <td>
               <div class="checkbox">
                 <label>
-                  <input type="checkbox" value="" ng-click="toggleSelection(item.id)">
+                  <input type="checkbox" value="" (click)="toggleSelection(item)" [checked]="isChecked(item.id)">
                 </label>
               </div>
             </td>

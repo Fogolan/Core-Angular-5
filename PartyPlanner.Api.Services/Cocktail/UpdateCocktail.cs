@@ -22,7 +22,7 @@ namespace PartyPlanner.Api.Services.Cocktail
                 _context = context;
             }
 
-            protected override Task<int> HandleCore(Command command)
+            protected override async Task<int> HandleCore(Command command)
             {
                 var cocktailDto = command.Cocktail;
                 var cocktail = _context.Cocktails
@@ -32,8 +32,8 @@ namespace PartyPlanner.Api.Services.Cocktail
                 cocktail.Degrees = cocktailDto.Degrees;
                 cocktail.Image = cocktailDto.Image;
                 cocktail.UpdatedDate = cocktailDto.UpdatedDate;
-                _context.SaveChanges();
-                return Task.FromResult(cocktail.Id);
+                await _context.SaveChangesAsync();
+                return cocktail.Id;
             }
         }
     }

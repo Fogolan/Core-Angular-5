@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
@@ -8,6 +9,7 @@ using PartyPlanner.Api.Services.Cocktail.Models;
 using PartyPlanner.Api.Services.Cocktail.Services;
 using PartyPlanner.Api.Services.User.Services;
 using PartyPlanner.Data.Entities;
+using PartyPlanner.Data.Models;
 
 namespace PartyPlanner.Api.Services.Cocktail
 {
@@ -20,7 +22,7 @@ namespace PartyPlanner.Api.Services.Cocktail
             public ClaimsPrincipal UserClaims { get; set; }
         }
 
-        public class Handler : AsyncRequestHandler<Command, int>, IPipelineBehavior<Command, int>
+        public class Handler : AsyncRequestHandler<Command, int>
         {
             private readonly ICocktailService _cocktailtService;
             private readonly PartyPlannerContext _context;
@@ -40,21 +42,18 @@ namespace PartyPlanner.Api.Services.Cocktail
             {
                 var user = await _userService.GetUserIdentity(command.UserClaims);
                 var cocktail = _cocktailtService.MapCocktailDtoToCocktail(command.CocktailDto, user);
+                var recipes = command.CocktailDto.Ingredients.Select(ingredient => new Recipe
+                {
+                    Cocktail = cocktail,
+                    IngredientId = ingredient.Id
+                });
 
-                _context.Cocktails.Add(cocktail);
+                await _context.Cocktails.AddAsync(cocktail);
+                await _context.Recipes.AddRangeAsync(recipes);
 
                 await _context.SaveChangesAsync();
 
                 return cocktail.Id;
-            }
-
-            public async Task<int> Handle(Command request, CancellationToken cancellationToken, RequestHandlerDelegate<int> next)
-            {
-                _validator.ValidateAndThrow(request.CocktailDto);
-
-                var response = await next();
-
-                return response;
             }
         }
     }

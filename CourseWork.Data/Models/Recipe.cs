@@ -13,7 +13,5 @@
         public int CocktailId { get; set; }
 
         public Cocktail Cocktail { get; set; }
-
-
     }
 }
