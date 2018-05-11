@@ -5,6 +5,8 @@ import { Route, extract } from '@app/core';
 import { CocktailFormComponent } from '@app/personanl-page/cocktail-form/cocktail-form.component';
 import { IngredientsFormComponent } from '@app/personanl-page/ingredients-form/ingredients-form.component';
 import { IngretientsComponent } from '@app/personanl-page/ingretients/ingretients.component';
+import { CocktailsComponent } from '@app/personanl-page/cocktails/cocktails.component';
+import { CocktailsListComponent } from '@app/personanl-page/cocktails-list/cocktails-list.component';
 
 const routes: Routes = [
   Route.withShell([
@@ -31,9 +33,29 @@ const routes: Routes = [
       ]
     },
     {
+      path: 'cocktailview',
+      component: CocktailFormComponent,
+      data: {
+        title: extract('Cocktail'),
+        readonly: true
+      },
+      children: [
+        {
+          path: ':id',
+          component: CocktailFormComponent,
+          data: { readonly: true }
+        }
+      ]
+    },
+    {
       path: 'ingredients',
       component: IngretientsComponent,
       data: { title: extract('Ingredients') }
+    },
+    {
+      path: 'cocktails',
+      component: CocktailsListComponent,
+      data: { title: extract('Cocktails') }
     }
   ])
 ];

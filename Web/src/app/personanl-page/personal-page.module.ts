@@ -7,6 +7,8 @@ import { CocktailService } from './cocktail-form/cocktail.service';
 import { IngredientsFormComponent } from '@app/personanl-page/ingredients-form/ingredients-form.component';
 import { SharedModule } from '@app/shared';
 import { IngretientsComponent } from '@app/personanl-page/ingretients/ingretients.component';
+import { CocktailsComponent } from '@app/personanl-page/cocktails/cocktails.component';
+import { CocktailsListComponent } from '@app/personanl-page/cocktails-list/cocktails-list.component';
 
 @NgModule({
   imports: [
@@ -19,7 +21,9 @@ import { IngretientsComponent } from '@app/personanl-page/ingretients/ingretient
   declarations: [
     CocktailFormComponent,
     IngredientsFormComponent,
-    IngretientsComponent
+    IngretientsComponent,
+    CocktailsComponent,
+    CocktailsListComponent,
   ]
 })
 export class PersonalPageModule { }

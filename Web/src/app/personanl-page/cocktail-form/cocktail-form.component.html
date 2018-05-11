@@ -1,8 +1,9 @@
-<form class="form" [formGroup]="form" (submit)="onSubmit()">
+<form *ngIf="!readonly" class="form" [formGroup]="form" (submit)="onSubmit()">
   <div class="container h-100">
     <div class="row align-items-center h-100">
       <div class="col-5 mx-auto">
-        <h1 class="text-center" translate>CreateCocktail</h1>
+        <h1 class="text-center" *ngIf="isNewCocktail()">Create Cocktail</h1>
+        <h1 class="text-center" *ngIf="!isNewCocktail()">Update Cocktail</h1>
         <br>
         <div class="form-group row">
           <app-upload-photo [(fileUrl)]="cocktail.imageSrc" (urlChange)="urlChange($event)"></app-upload-photo>
@@ -30,10 +31,34 @@
         </div>
         <br/>
         <button type="submit" class="btn btn-primary" translate>Save cocktail</button>
-        <button *ngIf="!isNewIngredient()" type="button" (click)="delete()" class="btn btn-primary" translate>Delete ingredient</button>
+        <button *ngIf="!isNewCocktail()" type="button" (click)="delete()" class="btn btn-primary" translate>Delete cocktail</button>
         <br/>
         <app-ingredients-list url="/ingredient" readonly="false" (selectedItemsChanges)="ingredientsChange($event)" [selectedItems]="cocktail.ingredients"></app-ingredients-list>
       </div>
     </div>
   </div>
 </form>
+<div *ngIf="readonly" class="container h-100 border">
+    <div class="row align-items-center h-100">
+      <div class="col-5 mx-auto">
+        <br>
+        <div class="form-group row">
+          <app-upload-photo [fileUrl]="cocktail.imageSrc" readonly="true"></app-upload-photo>
+        </div>
+        <div class="form-group row">
+          {{cocktail.name}}
+        </div>
+        <div class="form-group row">
+          Strength: {{cocktail.degrees}} degrees
+        </div>
+        <div class="form-group row">
+          Amount: {{cocktail.amount}} ml
+        </div>
+        <div class="form-group row">
+          Author: {{cocktail.username}}
+        </div>
+        <br/>
+        <app-ingredients-list [selectedItems]="cocktail.ingredients"></app-ingredients-list>
+      </div>
+    </div>
+  </div>

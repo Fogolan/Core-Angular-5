@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PartyPlanner.Api.Services.Cocktail;
+using PartyPlanner.Api.Services.Cocktail.Models;
 using PartyPlanner.Data.Models;
 
 namespace PartyPlanner.Web.Api.Controllers
@@ -37,7 +38,7 @@ namespace PartyPlanner.Web.Api.Controllers
 
         // PUT: api/Cocktail/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateCocktail([FromRoute] int id, [FromBody] Cocktail cocktail)
+        public async Task<IActionResult> UpdateCocktail([FromRoute] int id, [FromBody] CocktailDto cocktail)
         {
             return Ok(await _mediator.Send(new UpdateCocktail.Command
             {

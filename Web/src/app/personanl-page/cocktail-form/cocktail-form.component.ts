@@ -20,6 +20,7 @@ export class CocktailFormComponent implements OnInit {
   form: FormGroup;
   cocktail: Cocktail;
   initialState = new Cocktail();
+  readonly = false;
   private subscriptions: Subscription[] = [];
 
   constructor(
@@ -27,13 +28,16 @@ export class CocktailFormComponent implements OnInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router
-  ) { }
+  ) {
+    this.readonly = this.route.snapshot.data.readonly;
+  }
 
-  ngOnInit() {
+  async ngOnInit() {
     if (this.route.firstChild) {
-      this.subscriptions.push(this.route.firstChild.params.subscribe(params => this.loadCocktail(+params['id'])));
+      this.subscriptions.push(this.route.firstChild.params
+        .subscribe( async (params) => await this.loadCocktail(+params['id'])));
     } else {
-      this.loadCocktail(0);
+      await this.loadCocktail(0);
     }
     this.cocktail = new Cocktail();
     this.initForm();
@@ -65,7 +69,7 @@ export class CocktailFormComponent implements OnInit {
     this.cocktail.imageSrc = url;
   }
 
-  isNewIngredient(): boolean {
+  isNewCocktail(): boolean {
     return this.cocktail && !this.cocktail.id;
   }
 
@@ -73,11 +77,11 @@ export class CocktailFormComponent implements OnInit {
     await this.cocktailService.deleteById(this.cocktail.id);
   }
 
-  private loadCocktail(id: number) {
+  private async loadCocktail(id: number) {
     this.cocktail = null;
     this.initForm();
     if (id) {
-      this.cocktailService.getById(id).then((data: Cocktail) => this.initCocktail(data));
+      await this.cocktailService.getById(id).then((data: Cocktail) => this.initCocktail(data));
     } else {
       this.initCocktail(new Cocktail());
     }

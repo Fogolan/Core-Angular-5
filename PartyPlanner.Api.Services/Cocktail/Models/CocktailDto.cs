@@ -20,7 +20,7 @@ namespace PartyPlanner.Api.Services.Cocktail.Models
 
         public DateTime UpdatedDate { get; set; }
 
-        public string UserId { get; set; }
+        public string Username { get; set; }
 
         public IEnumerable<IngredientDto> Ingredients { get; set; }
     }

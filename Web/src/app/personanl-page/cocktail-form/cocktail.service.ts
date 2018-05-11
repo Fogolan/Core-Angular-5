@@ -12,7 +12,7 @@ export class CocktailService {
     if (!cocktail.id) {
       await this.httpClient.post<number>('/cocktail', { cocktailDto: cocktail }).toPromise();
     } else {
-      await this.httpClient.put<number>('/cocktail', { cocktailDto: cocktail }).toPromise();
+      await this.httpClient.put<number>(`/cocktail/${cocktail.id}`, cocktail).toPromise();
     }
   }
 

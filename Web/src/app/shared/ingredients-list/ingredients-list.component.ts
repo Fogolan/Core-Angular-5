@@ -12,7 +12,15 @@ import { Router } from '@angular/router';
 export class IngredientsListComponent implements OnInit {
   @Input() url: string;
   @Input() readonly = true;
-  @Input() selectedItems: IngredientDto[] = [];
+  @Input()
+  set selectedItems(items: IngredientDto[]) {
+    this.setSelectedItems = items;
+    if (!this.url) {
+      this.ingredientsList = items;
+    }
+  }
+
+  setSelectedItems: IngredientDto[] = [];
   @Output() selectedItemsChanges: EventEmitter<IngredientDto[]> = new EventEmitter();
 
   ingredientsList: IngredientDto[];
@@ -30,12 +38,12 @@ export class IngredientsListComponent implements OnInit {
   }
 
   toggleSelection(selectedItem: IngredientDto) {
-    if (some(this.selectedItems, item => item.id === selectedItem.id)) {
-      remove(this.selectedItems, item => item.id === selectedItem.id);
+    if (some(this.setSelectedItems, item => item.id === selectedItem.id)) {
+      remove(this.setSelectedItems, item => item.id === selectedItem.id);
     } else {
-      this.selectedItems.push(selectedItem);
+      this.setSelectedItems.push(selectedItem);
     }
-    this.selectedItemsChanges.emit(this.selectedItems);
+    this.selectedItemsChanges.emit(this.setSelectedItems);
   }
 
   openIngredient(id: number) {
@@ -45,6 +53,6 @@ export class IngredientsListComponent implements OnInit {
   }
 
   isChecked(itemId: number): boolean {
-    return some(this.selectedItems, item => item.id === itemId);
+    return some(this.setSelectedItems, item => item.id === itemId);
   }
 }
