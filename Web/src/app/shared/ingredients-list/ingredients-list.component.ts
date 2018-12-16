@@ -23,11 +23,14 @@ export class IngredientsListComponent implements OnInit {
   setSelectedItems: IngredientDto[] = [];
   @Output() selectedItemsChanges: EventEmitter<IngredientDto[]> = new EventEmitter();
 
-  ingredientsList: IngredientDto[];
+  ingredientsList: IngredientDto[] = [];
 
-  constructor(private httpClient: HttpClient, private router: Router) {}
+  constructor(private httpClient: HttpClient, private router: Router) {
+    this.setSelectedItems = [];
+  }
 
   async ngOnInit() {
+    this.setSelectedItems = [];
     if (this.url) {
       this.ingredientsList = await this.getIngredients(this.url);
     }

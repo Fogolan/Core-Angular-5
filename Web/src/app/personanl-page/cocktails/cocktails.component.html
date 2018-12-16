@@ -1,24 +1,29 @@
-<div class="container h-100 border" *ngFor="let cocktail of cocktails">
-  <div class="row align-items-center h-100">
-    <div class="col-5 mx-auto">
-      <br>
-      <div class="form-group row">
-        <app-upload-photo [fileUrl]="cocktail.imageSrc" readonly="true"></app-upload-photo>
-      </div>
-      <div class="form-group row">
-        <a class="nav-item nav-link text-uppercase" (click)="openCocktail(cocktail.id)">
+<div *ngIf="cocktails && cocktails.length === 0" class="container h-100">
+  There is no coctails here
+</div>
+<div *ngIf="cocktails && cocktails.length > 0">
+  <div class="container h-100 border" *ngFor="let cocktail of cocktails">
+    <div class="row align-items-center h-100">
+      <div class="col-5 mx-auto">
+        <br>
+        <div class="form-group row">
+          <app-upload-photo [fileUrl]="cocktail.imageSrc" readonly="true"></app-upload-photo>
+        </div>
+        <div class="form-group row">
+          <a class="nav-item nav-link text-uppercase" (click)="openCocktail(cocktail.id)">
             <span translate>{{cocktail.name}}</span>
-        </a>
-      </div>
-      <div class="form-group row">	
-        Strength: {{cocktail.degrees}} degrees
-      </div>
-      <div class="form-group row">
-        Amount: {{cocktail.amount}} ml
-      </div>
-      <div class="form-group row">
+          </a>
+        </div>
+        <div class="form-group row">
+          Strength: {{cocktail.degrees}} degrees
+        </div>
+        <div class="form-group row">
+          Amount: {{cocktail.amount}} ml
+        </div>
+        <div class="form-group row">
           Author: {{cocktail.username}}
         </div>
+      </div>
     </div>
   </div>
 </div>

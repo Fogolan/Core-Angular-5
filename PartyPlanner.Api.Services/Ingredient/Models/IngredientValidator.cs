@@ -9,7 +9,7 @@ namespace PartyPlanner.Api.Services.Ingredient.Models
             RuleFor(x => x.Id)
                 .NotNull();
             RuleFor(x => x.Degrees)
-                .GreaterThan(0)
+                .GreaterThanOrEqualTo(0)
                 .LessThan(100);
             RuleFor(x => x.Name)
                 .NotNull()

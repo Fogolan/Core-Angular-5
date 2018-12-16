@@ -40,20 +40,28 @@ namespace PartyPlanner.Api.Services.Cocktail
 
             protected override async Task<int> HandleCore(Command command)
             {
-                var user = await _userService.GetUserIdentity(command.UserClaims);
-                var cocktail = _cocktailtService.MapCocktailDtoToCocktail(command.CocktailDto, user);
-                var recipes = command.CocktailDto.Ingredients.Select(ingredient => new Recipe
+                try
                 {
-                    Cocktail = cocktail,
-                    IngredientId = ingredient.Id
-                });
+                    var user = await _userService.GetUserIdentity(command.UserClaims);
+                    var cocktail = _cocktailtService.MapCocktailDtoToCocktail(command.CocktailDto, user);
+                    var recipes = command.CocktailDto.Ingredients.Select(ingredient => new Recipe
+                    {
+                        Cocktail = cocktail,
+                        IngredientId = ingredient.Id
+                    });
 
-                await _context.Cocktails.AddAsync(cocktail);
-                await _context.Recipes.AddRangeAsync(recipes);
+                    await _context.Cocktails.AddAsync(cocktail);
+                    await _context.Recipes.AddRangeAsync(recipes);
 
-                await _context.SaveChangesAsync();
+                    await _context.SaveChangesAsync();
 
-                return cocktail.Id;
+                    return cocktail.Id;
+                }
+                catch (Exception e)
+                {
+
+                    throw;
+                }               
             }
         }
     }

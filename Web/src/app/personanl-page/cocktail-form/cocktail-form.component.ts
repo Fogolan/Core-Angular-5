@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { NgModule } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { NgModel} from '@angular/forms';
 import { Cocktail } from '@app/personanl-page/cocktail-form/models/cocktail';
-import { HttpClient } from '@angular/common/http';
 import { CocktailService } from './cocktail.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
@@ -57,7 +54,7 @@ export class CocktailFormComponent implements OnInit {
       return;
     } else {
         await this.cocktailService.updateCocktail(this.cocktail);
-        console.log(this.form.value);
+        this.router.navigateByUrl('/mycocktails');
       }
   }
 
@@ -75,6 +72,7 @@ export class CocktailFormComponent implements OnInit {
 
   async delete() {
     await this.cocktailService.deleteById(this.cocktail.id);
+    await this.router.navigateByUrl('/mycocktails');
   }
 
   private async loadCocktail(id: number) {

@@ -31,6 +31,7 @@ namespace PartyPlanner.Api.Services.Cocktail
 
                 return context.Cocktails
                     .Where(cocktail => cocktail.User.Id == user.Id)
+                    .Where(cocktail => cocktail.Active)
                     .OrderByDescending(cocktail => cocktail.UpdatedDate)
                     .Select(cocktail => new CocktailDto
                     {

@@ -55,11 +55,13 @@ export class IngredientsFormComponent implements OnInit {
       return;
     } else {
         await this.service.updateIngredient(this.ingredient);
+        this.router.navigateByUrl('/ingredients');
       }
   }
 
   async delete() {
     await this.service.deleteById(this.ingredient.id);
+    this.router.navigateByUrl('/ingredients');
   }
 
   private loadIngredient(id: number) {

@@ -2,54 +2,59 @@
   <div class="row align-items-center h-100">
     <div class="mx-auto">
       <div class="table-responsive">
-        <table *ngIf="readonly === true" class="table-bordered">
-          <tr>
-            <td>Image</td>
-            <td>Name</td>
-            <td>Degrees %</td>
-          </tr>
-          <tr *ngFor="let item of ingredientsList">
-            <td>
-              <app-upload-photo [fileUrl]="item.imageSrc" readonly="true"></app-upload-photo>
-            </td>
-            <td>
-              <a class="nav-item nav-link text-uppercase" (click)="openIngredient(item.id)">
-                <span translate>{{item.name}}</span>
-              </a>
-            </td>
-            <td>
-              {{item.degrees}}
-            </td>
-          </tr>
-        </table>
-        <table *ngIf="readonly !== true" class="table-bordered">
-          <tr>
-            <td></td>
-            <td>Image</td>
-            <td>Name</td>
-            <td>Degrees %</td>
-          </tr>
-          <tr *ngFor="let item of ingredientsList">
-            <td>
-              <div class="checkbox">
-                <label>
-                  <input type="checkbox" value="" (click)="toggleSelection(item)" [checked]="isChecked(item.id)">
-                </label>
-              </div>
-            </td>
-            <td>
-              <app-upload-photo [fileUrl]="item.imageSrc" readonly="true"></app-upload-photo>
-            </td>
-            <td>
-              <a class="nav-item nav-link text-uppercase" (click)="openIngredient(item.id)">
-                <span translate>{{item.name}}</span>
-              </a>
-            </td>
-            <td>
-              {{item.degrees}}
-            </td>
-          </tr>
-        </table>
+        <div *ngIf="ingredientsList && ingredientsList.length > 0">
+          <table *ngIf="readonly === true" class="table-bordered">
+            <tr>
+              <td>Image</td>
+              <td>Name</td>
+              <td>Degrees %</td>
+            </tr>
+            <tr *ngFor="let item of ingredientsList">
+              <td>
+                <app-upload-photo [fileUrl]="item.imageSrc" readonly="true"></app-upload-photo>
+              </td>
+              <td>
+                <a class="nav-item nav-link text-uppercase" (click)="openIngredient(item.id)">
+                  <span translate>{{item.name}}</span>
+                </a>
+              </td>
+              <td>
+                {{item.degrees}}
+              </td>
+            </tr>
+          </table>
+          <table *ngIf="readonly !== true" class="table-bordered">
+            <tr>
+              <td></td>
+              <td>Image</td>
+              <td>Name</td>
+              <td>Degrees %</td>
+            </tr>
+            <tr *ngFor="let item of ingredientsList">
+              <td>
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" value="" (click)="toggleSelection(item)" [checked]="isChecked(item.id)">
+                  </label>
+                </div>
+              </td>
+              <td>
+                <app-upload-photo [fileUrl]="item.imageSrc" readonly="true"></app-upload-photo>
+              </td>
+              <td>
+                <a class="nav-item nav-link text-uppercase" (click)="openIngredient(item.id)">
+                  <span translate>{{item.name}}</span>
+                </a>
+              </td>
+              <td>
+                {{item.degrees}}
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div *ngIf="ingredientsList && ingredientsList.length === 0">
+          There is no ingredients here
+        </div>
       </div>
     </div>
   </div>
